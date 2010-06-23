@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  accountcode: MyString
+  src: MyString
+  dst: MyString
+  dcontext: MyString
+  clid: MyString
+  channel: MyString
+  dstchannel: MyString
+  lastapp: MyString
+  lastdata: MyString
+  calldate: 2009-09-21 18:53:45
+  answerdate: 2009-09-21 18:53:45
+  hangupdate: 2009-09-21 18:53:45
+  duration: 1
+  billsec: 1
+  disposition: MyString
+  amaflag: MyString
+  uniqueid: MyString
+  userfield: MyString
+
+two:
+  accountcode: MyString
+  src: MyString
+  dst: MyString
+  dcontext: MyString
+  clid: MyString
+  channel: MyString
+  dstchannel: MyString
+  lastapp: MyString
+  lastdata: MyString
+  calldate: 2009-09-21 18:53:45
+  answerdate: 2009-09-21 18:53:45
+  hangupdate: 2009-09-21 18:53:45
+  duration: 1
+  billsec: 1
+  disposition: MyString
+  amaflag: MyString
+  uniqueid: MyString
+  userfield: MyString

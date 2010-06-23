@@ -1,0 +1,22 @@
+%html
+  %head
+    %title Asterisk Call Logger
+    = stylesheet_link_tag 'scaffold'
+  %body.about
+    #container
+      #header
+        .header_image
+          =image_tag "logo.png"
+      #main-nav
+        = link_to "Home", home_url
+        = link_to "Call Record", cdr_entries_url
+      #content
+        .padding
+          = yield
+      #footer
+        Copyright &copy;
+        =application_author
+        %br
+        Powered by <a href="http://www.activeid.co.uk/">AID</a>
+        .altnav
+          = link_to "Home", home_url

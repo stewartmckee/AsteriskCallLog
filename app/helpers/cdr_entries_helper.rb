@@ -1,0 +1,2 @@
+module CdrEntriesHelper
+end

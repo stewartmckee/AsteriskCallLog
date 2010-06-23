@@ -1,0 +1,42 @@
+
+= link_to "This Week", cdr_entries_path(:extension => @extension, :start_date => @last_monday_date)
+|
+= link_to "Last Week", cdr_entries_path(:extension => @extension, :start_date => @last_monday_date-7.days)
+|
+= link_to "Previous Week", cdr_entries_path(:extension => @extension, :start_date => @last_monday_date-14.days)
+
+
+%br
+%br
+%h2 Call Summary
+
+%p Below is the summary of the calls made and received during this period.
+%p
+  %strong= time_in_words(@data.map{|d| d[:billsec]}.sum)
+
+%h2 Call Detail
+
+%p The detail of each call made and received is shown below.
+%table
+  %tr
+    %th Source
+    %th Destination
+    %th Call Date
+    %th Duration
+
+  - @data.each do |row|
+    %tr
+      %td
+        = h row[:src]
+      %td
+        = h row[:dst]
+      %td
+        = h row[:start].strftime("%d/%m/%Y %H:%M:%S")
+      %td{:align => "right"}
+        = h seconds_in_time(row[:billsec])
+  %tr
+    %td
+    %td
+    %td
+    %td{:align => "right"}
+      = seconds_in_time(@data.map{|d| d[:billsec]}.sum)

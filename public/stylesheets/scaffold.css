@@ -1,0 +1,337 @@
+body { background-color: #fff; color: #333; }
+
+body, p, ol, ul, td {
+    font-family: arial, helvetica, sans-serif;
+    font-size:   13px;
+    padding: 0px;
+    margin: 0px;
+    line-height: 18px;
+    color: #666666;
+}
+
+pre {
+    background-color: #eee;
+    padding: 10px;
+    font-size: 11px;
+}
+
+a { color: #000; }
+a:visited { color: #666; }
+
+#container {
+    margin: 0 auto;
+    padding: 0px;
+    width: 800px;
+    text-align: left;
+}
+/* Main Navigation */
+
+#main-nav {
+    height: 25px;
+    padding-top: 10px;
+    padding-left: 15px;
+    border-top: 1px solid black;
+  }
+#main-nav a {
+    font-size: 14px;
+    font-family: helvetica;
+    font-variant: small-caps;
+    text-decoration: none;
+    margin-right: 10px;
+}
+#main-nav a:hover {
+    color: #db6d16;
+}
+
+#main-nav a.selected {
+    color: #cb5d06;
+}
+#sub-nav {
+    height: 25px;
+    padding-top: 0px;
+    padding-left: 30px;
+    background: #dfffcf;
+}
+#sub-nav a {
+    font-size: 10px;
+    font-family: helvetica;
+    font-variant: small-caps;
+    text-decoration: none;
+    margin-right: 10px;
+}
+#sub-nav a:hover {
+    color: #db6d16;
+}
+
+#sub-nav a.selected {
+    color: #cb5d06;
+}
+
+#header {
+  height: 75px;
+  padding-top: 10px;
+  padding-left: 10px;
+  font-size: 16px;
+}
+
+.header_image {
+}
+
+#sidebar {
+    float: right;
+    width: 280px;
+    line-height: 18px;
+}
+
+#sidebar .padding {
+    padding: 25px;
+}
+
+#content {
+    line-height: 18px;
+}
+#content .padding {
+    padding: 25px;
+}
+
+#content h2 {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 15px;
+}
+
+#content p {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 15px;
+}
+
+#content table {
+    margin: 0px auto;
+    width: 80%;
+    padding: 0px;
+}
+#content tr {
+    padding: 0px;
+}
+#content td {
+    padding: 1px;
+    margin: 0px;
+}
+#content .row0 {
+    background: #cdcdcd;
+}
+
+#content .row1 {
+    background: #ededed;
+}
+
+#content td.number {
+    text-align: right;
+}
+
+#content .pagination {
+    padding-top: 8px;
+    text-align: center;
+}
+
+#cards .card{
+    background: #94f3a8;
+    padding: 2px;
+    margin: 2px;
+}
+#cards .cardnumber {
+    background: #64e398;
+
+}
+
+#footer {
+    clear: both;
+    height: 66px;
+    font-family: Tahoma, Arial, Helvetica, Sans-serif;
+    font-size: 10px;
+    color: #a9a9a9;
+    border-top: 1px solid #efefef;
+    padding: 13px 25px;
+    line-height: 18px;
+}
+
+.altnav {
+  float: right;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+#footer a {
+    color: #a9a9a9;
+}
+
+
+a:hover {
+    color: #db6d16;
+}
+
+#footer #altnav {
+    width: 350px;
+    float: right;
+    text-align: right;
+}
+
+#header h1 {
+    margin: 0;
+    padding: 0;
+    float: left;
+    margin-top: 57px;
+    padding-right: 0px;
+}
+
+#user {
+    margin: 0 auto;
+    width: 100%;
+    height: 200px;
+
+}
+
+#user .display {
+    width: 330px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    height: 400px;
+}
+
+#display_block {
+    margin: 10px;
+    margin-bottom: 20px;
+    background: #ccedce;
+    padding: 2px;
+}
+
+#display_block h3 {
+    background: #a7c2a8;
+    color: #23453e;
+    margin: 0px;
+}
+
+#display_block .block_contents {
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+#display_block .card_header {
+    border-bottom: 1px solid black;
+    font-weight: bolder;
+    padding-top: 12px;
+}
+
+#display_block .card_body {
+    padding: 5px;
+    padding-left: 10px;
+}
+
+#display_block .block_item {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+
+
+#user #info {
+    float: left;
+}
+
+#user #action {
+    float: right;
+}
+
+.account_area {
+    margin: 3px;
+    padding: 2px;
+    margin-top: 70px;
+    float: right;
+    color: #000000;
+    text-align: center;
+    width: 170px;
+    opacity:.80;
+}
+.account_area:hover {
+    opacity: 1.0;
+}
+
+#login_form {
+    font-size: 12px;
+}
+
+.form_label {
+    float: left;
+    width: 50px;
+    padding-top: 3px;
+    padding-right: 2px;
+    height: 20px;
+    text-align: right;
+}
+.form_input {
+    float: right;
+    width: 100px;
+    height: 21px;
+    margin-top: 2px;
+}
+
+.emph_link {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.fieldWithErrors {
+    padding: 2px;
+    background-color: red;
+    display: table;
+}
+
+#errorExplanation {
+    width: 400px;
+    border: 2px solid red;
+    padding: 7px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    background-color: #c00;
+    color: #fff;
+}
+
+#errorExplanation p {
+    color: #333;
+    margin-bottom: 0;
+    padding: 5px;
+}
+
+#errorExplanation ul li {
+    font-size: 12px;
+    list-style: square;
+}
+
+table {
+}
+
+td {
+  padding: 2px;
+  font-size: 12px;
+}
+
+#content td {
+  font-size: 16px;
+}
