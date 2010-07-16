@@ -8,35 +8,65 @@
 
 %br
 %br
-%h2 Call Summary
-
-%p Below is the summary of the calls made and received during this period.
-%p
-  %strong= time_in_words(@data.map{|d| d[:billsec]}.sum)
-
-%h2 Call Detail
-
-%p The detail of each call made and received is shown below.
-%table
-  %tr
-    %th Source
-    %th Destination
-    %th Call Date
-    %th Duration
-
-  - @data.each do |row|
+#callsummary
+  %h2 Call Summary
+  
+  %p Below is the summary of the calls made and received during this period.
+  %table
+    %tr
+      %th{:colspan => 3, :align => "left"}
+        Call Totals
     %tr
       %td
-        = h row[:src]
+        Incoming:
       %td
-        = h row[:dst]
+        = "#{@incoming.length} calls"
       %td
-        = h row[:start].strftime("%d/%m/%Y %H:%M:%S")
-      %td{:align => "right"}
-        = h seconds_in_time(row[:billsec])
-  %tr
-    %td
-    %td
-    %td
-    %td{:align => "right"}
-      = seconds_in_time(@data.map{|d| d[:billsec]}.sum)
+        = "#{time_in_words(@incoming.map{|d| d.billsec}.sum)} (#{@incoming.map{|d| d.billsec}.sum/60} mins)"
+    %tr
+      %td
+        Outgoing:
+      %td
+        = "#{@outgoing.length} calls"
+      %td
+        = "#{time_in_words(@outgoing.map{|d| d.billsec}.sum)} (#{@outgoing.map{|d| d.billsec}.sum/60} mins)"
+    %tr
+      %td
+        Total:
+      %td
+        = "#{@data.length} calls"
+      %td
+        = "#{time_in_words(@data.map{|d| d.billsec}.sum)} (#{@data.map{|d| d.billsec}.sum/60} mins)"
+  %p
+
+#calldetail
+  %h2 Call Detail
+  
+  %p The detail of each call made and received is shown below.
+  %table
+    %tr
+      %th Source
+      %th Destination
+      %th Call Date
+      %th Duration
+      
+    - @grouped_data.each do |name, day_data|
+      %tr
+        %td{:class => "table_break", :colspan => 4, :align => "left"}
+          = "#{name} - #{day_data[0].calldate.strftime("%d/%m/%Y")}"
+      - day_data.each do |entry|
+        %tr
+          %td
+            = h parse_phone(entry.src)
+          %td
+            = h parse_phone(entry.dst)
+          %td
+            = h entry.calldate.strftime("%d/%m/%Y %H:%M:%S")
+          %td{:align => "right"}
+            = h seconds_in_time(entry.billsec)
+      %tr
+        %td{:class => "table_total", :colspan => 4, :align => "right"}
+          = "Daily Total: #{day_data.length} calls for #{day_data.map{|d| d.billsec}.sum / 60} minutes"
+    %tr
+      %td{:class => "table_total", :colspan => 4, :align => "right"}
+        = "Weekly Total: #{@data.length} calls for #{@data.map{|d| d.billsec}.sum / 60} minutes"

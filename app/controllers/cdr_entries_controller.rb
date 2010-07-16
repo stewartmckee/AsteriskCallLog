@@ -1,16 +1,14 @@
 require 'fastercsv'
+require 'ftools'
+require 'phone'
 
 class CdrEntriesController < ApplicationController
   # GET /cdr_entries
   # GET /cdr_entries.xml
   def index
 
-    @columns = %w[accountcode src dst dcontext clid channel dstchannel lastapp lastdata start answer end duration billsec disposition amaflags]
-    @display_columns = %w[src dst start billsec]
     @extension = params[:extension]
-    @start_date = Date.parse(params[:start_date]) unless params[:start_date].nil?
-    @data = []
-
+    @start_date = DateTime.parse(params[:start_date]) unless params[:start_date].nil?
     (0..6).each do |d|
       date = Date.today-d.days
       if date.strftime("%A") == "Monday"
@@ -19,30 +17,15 @@ class CdrEntriesController < ApplicationController
       end
     end
     @start_date = @last_monday_date if @start_date.nil?
-
     
-    FasterCSV.foreach('Master.csv') do |row|
-      values = {}
-      counter = 0
-      record_date = DateTime.strptime(row[9], '%Y-%m-%d %H:%M:%S')
-      puts record_date
-      if row[1] == @extension and record_date >= @start_date and record_date < @start_date+7.days
-        @columns.each do |column_name|
-          if column_name == "start" or column_name == "answer" or column_name == "end"
-            values[column_name.to_sym] = DateTime.strptime(row[counter], '%Y-%m-%d %H:%M:%S') unless row[counter].nil?
-
-          elsif column_name == "billsec"
-            values[column_name.to_sym] = row[counter].to_i
-          else
-            values[column_name.to_sym] = row[counter]
-          end
-          counter += 1
-        end
-        puts values.inspect
-        @data << values
-      end
-    end
-
+    @data = CdrEntries.exclude_s.for_extension(@extension).after(@start_date).before(@start_date + 7.days)
+    
+    @incoming = @data.find_all_by_dst(@extension)
+    @outgoing = @data.find_all_by_src(@extension)
+    
+    @grouped_data = @data.group_by{|entry| entry.calldate.strftime("%A")}
+    puts @grouped_data
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @cdr_entries }
@@ -120,5 +103,24 @@ class CdrEntriesController < ApplicationController
       format.html { redirect_to(cdr_entries_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def phone_as_string(number)
+    @default_country = "44"
+    @default_code = "141"
+    
+    @international = false
+    @national = false
+    @local = false
+    
+    
+    if number.starts_with?("00") or number.starts_with?("+")
+      @international = true
+    end
+    
+    
+    
   end
 end

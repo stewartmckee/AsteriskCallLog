@@ -318,7 +318,7 @@ a:hover {
     margin-bottom: 0;
     padding: 5px;
 }
-
+day_title
 #errorExplanation ul li {
     font-size: 12px;
     list-style: square;
@@ -333,5 +333,13 @@ td {
 }
 
 #content td {
-  font-size: 16px;
+  font-size: 14px;
+}
+
+#content .table_break {
+  background:none repeat scroll 0 0 #EEEEEE;
+  border-bottom:1px solid black;
+  font-weight:bold;
+  height:33px;
+  vertical-align:bottom;
 }
