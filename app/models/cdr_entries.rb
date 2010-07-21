@@ -7,6 +7,8 @@ class CdrEntries < ActiveRecord::Base
   named_scope :exclude_s, lambda {{:conditions => "dst <> 's'"}}
   named_scope :before, lambda {|date| {:conditions => ["calldate < ?", date]}}
   named_scope :after, lambda {|date| {:conditions => ["calldate > ?", date]}}
+  named_scope :on, lambda {|date| {:conditions => ["DATE(calldate) = DATE(?)", date]}}
+  named_scope :by_ids, lambda {|ids| {:conditions => ["id in (?)", ids]}}
   
   named_scope :incoming, lambda {|exten| {:conditions => ["dst = ?", exten]}}  
   named_scope :outgoing, lambda {|exten| {:conditions => ["src = ? and not dst = ?", exten, exten]}}  

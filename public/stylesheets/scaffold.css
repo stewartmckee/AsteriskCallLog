@@ -108,7 +108,7 @@ a:visited { color: #666; }
 
 #content table {
     margin: 0px auto;
-    width: 80%;
+    width: 100%;
     padding: 0px;
 }
 #content tr {
@@ -342,4 +342,8 @@ td {
   font-weight:bold;
   height:33px;
   vertical-align:bottom;
+}
+
+#content ul {
+   margin-left: 40px;
 }

@@ -1,8 +1,30 @@
 class HomeController < ApplicationController
-  # GET /homes
-  # GET /homes.xml
+  before_filter :login_required
+
   def index
-    @homes = Home.find(:all)
+
+    @extension = current_user.extension
+    @start_date = DateTime.parse(params[:start_date]) unless params[:start_date].nil?
+    (0..6).each do |d|
+      date = Date.today-d.days
+      if date.strftime("%A") == "Monday"
+        @last_monday_date = date
+        break
+      end
+    end
+    @start_date = @last_monday_date if @start_date.nil?
+    
+    @data = CdrEntries.exclude_s.for_extension(@extension).after(@start_date).before(@start_date + 7.days)
+    
+    @data.each do |cdr|
+      cdr.src = "Incoming Call" if cdr.dst == cdr.src
+    end
+    
+    @incoming = @data.incoming(@extension)
+    @outgoing = @data.outgoing(@extension)
+    
+    @grouped_data = @data.group_by{|entry| entry.calldate.strftime("%A")}
+    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,76 +32,4 @@ class HomeController < ApplicationController
     end
   end
 
-  # GET /homes/1
-  # GET /homes/1.xml
-  def show
-    @home = Home.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @home }
-    end
-  end
-
-  # GET /homes/new
-  # GET /homes/new.xml
-  def new
-    @home = Home.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @home }
-    end
-  end
-
-  # GET /homes/1/edit
-  def edit
-    @home = Home.find(params[:id])
-  end
-
-  # POST /homes
-  # POST /homes.xml
-  def create
-    @home = Home.new(params[:home])
-
-    respond_to do |format|
-      if @home.save
-        flash[:notice] = 'Home was successfully created.'
-        format.html { redirect_to(@home) }
-        format.xml  { render :xml => @home, :status => :created, :location => @home }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @home.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /homes/1
-  # PUT /homes/1.xml
-  def update
-    @home = Home.find(params[:id])
-
-    respond_to do |format|
-      if @home.update_attributes(params[:home])
-        flash[:notice] = 'Home was successfully updated.'
-        format.html { redirect_to(@home) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @home.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /homes/1
-  # DELETE /homes/1.xml
-  def destroy
-    @home = Home.find(params[:id])
-    @home.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(homes_url) }
-      format.xml  { head :ok }
-    end
-  end
 end

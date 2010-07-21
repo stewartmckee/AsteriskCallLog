@@ -1,0 +1,6 @@
+
+%h2 This week
+= render :partial => "reports", :locals => {:data => @weekly_data, :id => "weekly"}
+
+%h2 This month
+= render :partial => "reports", :locals => {:data => @monthly_data, :id => "monthly"}

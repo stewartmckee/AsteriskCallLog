@@ -1,48 +1,16 @@
 
-= link_to "This Week", cdr_entries_path(:extension => @extension, :start_date => @last_monday_date)
+= link_to "This Week", calls_path(:extension => @extension, :start_date => @last_monday_date)
 |
-= link_to "Last Week", cdr_entries_path(:extension => @extension, :start_date => @last_monday_date-7.days)
+= link_to "Last Week", calls_path(:extension => @extension, :start_date => @last_monday_date-7.days)
 |
-= link_to "Previous Week", cdr_entries_path(:extension => @extension, :start_date => @last_monday_date-14.days)
-
+= link_to "Previous Week", calls_path(:extension => @extension, :start_date => @last_monday_date-14.days)
 
 %br
 %br
-#callsummary
-  %h2 Call Summary
-  
-  %p Below is the summary of the calls made and received during this period.
-  %table
-    %tr
-      %th{:colspan => 3, :align => "left"}
-        Call Totals
-    %tr
-      %td
-        Incoming:
-      %td
-        = "#{@incoming.length} calls"
-      %td
-        = "#{time_in_words(@incoming.map{|d| d.billsec}.sum)} (#{@incoming.map{|d| d.billsec}.sum/60} mins)"
-    %tr
-      %td
-        Outgoing:
-      %td
-        = "#{@outgoing.length} calls"
-      %td
-        = "#{time_in_words(@outgoing.map{|d| d.billsec}.sum)} (#{@outgoing.map{|d| d.billsec}.sum/60} mins)"
-    %tr
-      %td
-        Total:
-      %td
-        = "#{@data.length} calls"
-      %td
-        = "#{time_in_words(@data.map{|d| d.billsec}.sum)} (#{@data.map{|d| d.billsec}.sum/60} mins)"
-  %p
 
 #calldetail
-  %h2 Call Detail
+  %h2= "Call Detail for #{@user.fullname}"
   
-  %p The detail of each call made and received is shown below.
   %table
     %tr
       %th Source

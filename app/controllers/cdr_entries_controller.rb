@@ -1,13 +1,10 @@
-require 'fastercsv'
-require 'ftools'
-require 'phone'
-
 class CdrEntriesController < ApplicationController
-  # GET /cdr_entries
-  # GET /cdr_entries.xml
+  before_filter :login_required
+
   def index
 
     @extension = params[:extension]
+    @user = User.find_by_extension(@extension)
     @start_date = DateTime.parse(params[:start_date]) unless params[:start_date].nil?
     (0..6).each do |d|
       date = Date.today-d.days
@@ -28,7 +25,6 @@ class CdrEntriesController < ApplicationController
     @outgoing = @data.outgoing(@extension)
     
     @grouped_data = @data.group_by{|entry| entry.calldate.strftime("%A")}
-    puts @grouped_data
     
     respond_to do |format|
       format.html # index.html.erb

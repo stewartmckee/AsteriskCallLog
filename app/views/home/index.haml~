@@ -1,19 +1,65 @@
-
-%h1 Extensions
+%h1 Asterisk Call Logger
 %br
+
+%p
+  = "Welcome, #{current_user.fullname},"
+  
+- if current_user.admin?
+  Select a user below to view their call details
+  %br
+  %br
+  %ul  
+    - User.all.each do |user|
+      %li
+        = link_to "#{user.fullname} (#{user.extension})", calls_path(user.extension) 
+  
+  %br
+  %br
+  
+%p
+  Below is a summary of your recent call activity
+
 %table
+  %tr
+    %th{:colspan => 3, :align => "left"}
+      Call Totals so far this week
+  %tr
+    %td
+      Incoming:
+    %td
+      = "#{@incoming.length} calls"
+    %td
+      = "#{time_in_words(@incoming.map{|d| d.billsec}.sum)} (#{@incoming.map{|d| d.billsec}.sum/60} mins)"
+  %tr
+    %td
+      Outgoing:
+    %td
+      = "#{@outgoing.length} calls"
+    %td
+      = "#{time_in_words(@outgoing.map{|d| d.billsec}.sum)} (#{@outgoing.map{|d| d.billsec}.sum/60} mins)"
+  %tr
+    %td
+      Total:
+    %td
+      = "#{@data.length} calls"
+    %td
+      = "#{time_in_words(@data.map{|d| d.billsec}.sum)} (#{@data.map{|d| d.billsec}.sum/60} mins)"
+
+
+
+%table{:style => "display: none;"}
   %tr
     %th US
     %th UK
   %tr
-    %td= link_to "Derick Fleming (552)", cdr_entries_path(:extension => "552")
-    %td= link_to "Gemma Brewis (2542)", cdr_entries_path(:extension => "2542")
+    %td= link_to "Derick Fleming (552)", calls_path(:extension => "552")
+    %td= link_to "Gemma Brewis (2542)", calls_path(:extension => "2542")
   %tr
-    %td= link_to "Kevin O'Brien (553)", cdr_entries_path(:extension => "553")
-    %td= link_to "Farrah Iqbal (2543)", cdr_entries_path(:extension => "2543")
+    %td= link_to "Kevin O'Brien (553)", calls_path(:extension => "553")
+    %td= link_to "Farrah Iqbal (2543)", calls_path(:extension => "2543")
   %tr
-    %td= link_to "Elizabeth Macdonald (554)", cdr_entries_path(:extension => "554")
+    %td= link_to "Elizabeth Macdonald (554)", calls_path(:extension => "554")
     %td
   %tr
-    %td= link_to "Johnny Mone (555)", cdr_entries_path(:extension => "555")
+    %td= link_to "Johnny Mone (555)", calls_path(:extension => "555")
     %td

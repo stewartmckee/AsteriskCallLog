@@ -1,0 +1,9 @@
+%div{:class => "flash_object", :id => id}
+  %strong You need to upgrade your Flash Player
+%script{ :type => 'text/javascript' }
+  //<![CDATA[
+  = '  var so = new SWFObject("/charts/amcolumn.swf", "amcolumn", "100%", "205", "4", "#FFFFFF");'
+  = '  so.addVariable("path", "/charts/");'
+  = "  so.addVariable('chart_settings', encodeURIComponent('#{data}'));"
+  = "  so.write('#{id}');"
+  //]]>

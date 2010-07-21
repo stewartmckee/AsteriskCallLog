@@ -2,6 +2,7 @@
   %head
     %title Asterisk Call Logger
     = stylesheet_link_tag 'scaffold'
+    = javascript_include_tag "swfobject"
   %body.about
     #container
       #header
@@ -9,7 +10,9 @@
           =image_tag "logo.png"
       #main-nav
         = link_to "Home", home_url
-        = link_to "Call Record", cdr_entries_url
+        = link_to "My Calls", calls_url(:extension => current_user.extension) unless current_user.nil?
+        = link_to "My Reports", report_url(:extension => current_user.extension) unless current_user.nil?
+        = link_to "Logout", logout_url unless current_user.nil?
       #content
         .padding
           = yield
