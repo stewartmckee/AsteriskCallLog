@@ -20,8 +20,12 @@ class CdrEntriesController < ApplicationController
     
     @data = CdrEntries.exclude_s.for_extension(@extension).after(@start_date).before(@start_date + 7.days)
     
-    @incoming = @data.find_all_by_dst(@extension)
-    @outgoing = @data.find_all_by_src(@extension)
+    @data.each do |cdr|
+      cdr.src = "Incoming Call" if cdr.dst == cdr.src
+    end
+    
+    @incoming = @data.incoming(@extension)
+    @outgoing = @data.outgoing(@extension)
     
     @grouped_data = @data.group_by{|entry| entry.calldate.strftime("%A")}
     puts @grouped_data

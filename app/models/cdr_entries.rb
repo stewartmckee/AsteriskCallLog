@@ -8,6 +8,9 @@ class CdrEntries < ActiveRecord::Base
   named_scope :before, lambda {|date| {:conditions => ["calldate < ?", date]}}
   named_scope :after, lambda {|date| {:conditions => ["calldate > ?", date]}}
   
+  named_scope :incoming, lambda {|exten| {:conditions => ["dst = ?", exten]}}  
+  named_scope :outgoing, lambda {|exten| {:conditions => ["src = ? and not dst = ?", exten, exten]}}  
+  
   def self.update_from_log
 
     @copied_file = File.join(File.dirname(__FILE__), '..', '..', 'master.csv')
