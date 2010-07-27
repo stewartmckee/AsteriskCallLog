@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
   
   validates_presence_of     :extension
-  validates_length_of       :extension,    :within => 3..4
+  #validates_length_of       :extension,    :within => 3..4
   validates_uniqueness_of   :extension
   
   # HACK HACK HACK -- how to do attr_accessible from here?

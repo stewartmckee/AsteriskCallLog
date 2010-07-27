@@ -17,8 +17,17 @@ class ReportController < ApplicationController
     users = [current_user]
     users = User.all if current_user.admin?  
     
-    weekly_calls = CdrEntries.after(@last_monday_date).group_by{|call| call.calldate.strftime("%d/%m/%Y")}
+    weekly_calls = CdrEntries.after(@last_monday_date).group_by{|call| call.calldate.strftime("%A")}
+    
+    (0..4).each do |d|
+      day = @last_monday_date + d.days
+      if weekly_calls[day.strftime("%A")].nil?
+        weekly_calls[day.strftime("%A")] = []
+      end
+    end
+    
     monthly_calls = CdrEntries.after(1.month.ago).group_by{|call| call.calldate.strftime("Week %W")}
+    
     
     @weekly_data = {:call_duration => generate_graph(users, weekly_calls, :duration, (Date.today - @last_monday_date)), :call_volume => generate_graph(users, weekly_calls, :volume, (Date.today - @last_monday_date))}    
     @monthly_data = {:call_duration => generate_graph(users, monthly_calls, :duration, (Date.today - (@last_monday_date - 4.weeks))), :call_volume => generate_graph(users, monthly_calls, :volume, (Date.today - (@last_monday_date - 4.weeks)))}
