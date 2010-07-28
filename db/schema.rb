@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100727191134) do
+ActiveRecord::Schema.define(:version => 20100728222743) do
 
   create_table "cdr_entries", :force => true do |t|
     t.string   "accountcode"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20100727191134) do
     t.string   "extension"
     t.string   "fullname"
     t.boolean  "admin",                                    :default => false
+    t.boolean  "account_manager",                          :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
