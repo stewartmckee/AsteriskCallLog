@@ -75,6 +75,8 @@ class ReportController < ApplicationController
     end
     settings += "</graphs></settings>"
     
+    settings.gsub("'", "&#39;")
+    
   end
   
   def generate_report_graph_data(calls, type, graph_dates)
