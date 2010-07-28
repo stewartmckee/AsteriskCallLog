@@ -86,7 +86,7 @@ class ReportController < ApplicationController
      x.chart {
       x.series {
         calls.each do |group, call_data|
-          x.value(group, :xid => group) 
+          x.value(group.titleize, :xid => group) 
         end
       }
       x.graphs{
