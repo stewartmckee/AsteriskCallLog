@@ -57,7 +57,7 @@ class ReportController < ApplicationController
     settings += "<grid><category><alpha>8</alpha><dashed>1</dashed><dash_length>8</dash_length></category><value><alpha>8</alpha><dashed>1</dashed></value></grid>"
     settings += "<axes><category><tick_length>0</tick_length><width>1</width><color>E7E7E7</color></category><value><tick_length>2</tick_length><width>1</width><color>E7E7E7</color></value></axes>"
     settings += "<values><category><color>000000</color><text_size>11</text_size></category><value><min>0</min></value></values>"
-    settings += "<legend><x>460</x><y>60</y><max_columns>1</max_columns><spacing>2</spacing></legend>"
+    settings += "<legend><x>620</x><y>60</y><max_columns>1</max_columns><spacing>2</spacing></legend>"
     settings += "<column><width>85</width><spacing>2</spacing><data_labels_text_color>FFFFFF</data_labels_text_color><data_labels_text_size>11</data_labels_text_size><data_labels_position>outside</data_labels_position><data_labels_always_on>1</data_labels_always_on><grow_time>0</grow_time><sequenced_grow>0</sequenced_grow><balloon_text>{value} {description}</balloon_text></column><depth>3</depth><angle>24</angle><line><bullet>round</bullet></line>"
     settings += "<labels><label lid=\"0\"><text><![CDATA[<b>#{graph_title}</b>]]></text><y>18</y><text_color>000000</text_color><text_size>24</text_size><rotate>0</rotate><align>center</align><label lid=\"1\"><text># of Dials</text><x>6</x><y>160</y><text_size>18</text_size><rotate>1</rotate></label><label lid=\"2\"><text>Account Manager</text><x>-80</x><y>222</y><text_size>18</text_size><align>center</align></label></label></labels>"
     settings += "<line><connect>1</connect></line>"
