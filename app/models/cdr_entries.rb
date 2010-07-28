@@ -12,6 +12,8 @@ class CdrEntries < ActiveRecord::Base
   
   named_scope :incoming, lambda {|exten| {:conditions => ["dst = ?", exten]}}  
   named_scope :outgoing, lambda {|exten| {:conditions => ["src = ? and not dst = ?", exten, exten]}}  
+
+  belongs_to :user, :primary_key => "extension",  :foreign_key => "src"  
   
   def self.update_from_log
 
