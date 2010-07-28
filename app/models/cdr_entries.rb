@@ -4,6 +4,7 @@ require 'ftools'
 class CdrEntries < ActiveRecord::Base
   
   named_scope :for_extension, lambda {|extension|{:conditions => ["src = ? or dst = ?", extension, extension], :order => "calldate desc"}}
+  named_scope :for_users, lambda {|users|{:conditions => ["src in (?)", users.map{|u| u.extension}], :order => "calldate desc"}}
   named_scope :exclude_s, lambda {{:conditions => "dst <> 's'"}}
   named_scope :before, lambda {|date| {:conditions => ["calldate < ?", date]}}
   named_scope :after, lambda {|date| {:conditions => ["calldate > ?", date]}}

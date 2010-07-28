@@ -15,18 +15,17 @@ class ReportController < ApplicationController
     end  
     
     users = [current_user]
-    users = User.all if current_user.admin?
+    users = User.account_managers if current_user.admin?
     
     dates = [4.days.ago, 3.days.ago, 2.days.ago, 1.days.ago, DateTime.now]     
     
-    weekly_calls = CdrEntries.after(@last_monday_date).reject{|c| c.user.nil?}.group_by{|call| call.user.fullname}
-    
+    weekly_calls = CdrEntries.for_users(users).after(@last_monday_date).reject{|c| c.user.nil?}.group_by{|call| call.user.fullname}
     
     users.each do |u|
       weekly_calls[u.fullname] = [] if weekly_calls[u.fullname].nil?
     end 
 
-    monthly_calls = CdrEntries.after(1.month.ago).reject{|c| c.user.nil?}.group_by{|call| call.user.fullname}
+    monthly_calls = CdrEntries.for_users(users).after(1.month.ago).reject{|c| c.user.nil?}.group_by{|call| call.user.fullname}
     
     week_dates = []
     (0..4).each do |d|

@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
   has_many :calls, :primary_key => "extension", :foreign_key => "src", :class_name => "CdrEntries"
 
 
+  named_scope :account_managers, lambda {{:conditions => "account_manager = 1"}}  
+  
+
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
   # uff.  this is really an authorization, not authentication routine.  
