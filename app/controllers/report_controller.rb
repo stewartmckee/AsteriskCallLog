@@ -3,13 +3,13 @@ class ReportController < ApplicationController
   
   SATURDAY = 6
   SUNDAY = 0
-  
+
+  CHARTS = [:this_week, :last_week, :this_month, :last_month, :month_to_date]
   CHART_TYPES = [:weekly, :monthly, :month_to_date]
   
   def index
     
-    @chart_type = params[:chart_type].to_sym  
-  
+    @chart = params[:chart_type].to_sym
     # find the monday just past
     (0..6).each do |d|
       date = Date.today-d.days
@@ -30,6 +30,26 @@ class ReportController < ApplicationController
     end
     @first_friday = @first_monday+4.days
     
+    if @chart == :this_week or @chart == :last_week 
+      @chart_type = :weekly
+      @last_monday_date = @last_monday_date - 1.week if @chart == :last_week  
+    elsif @chart == :this_month or @chart == :last_month 
+      @chart_type = :monthly
+      if @chart == :last_month
+        @start_date = Date.parse("01-#{(Date.today - 31.days).month}-#{Date.today.year}")
+        (0..6).each do |d|
+          date = @start_date+d.days
+          if date.strftime("%A") == "Monday"
+            @first_monday = date
+            break
+          end
+        end
+        @first_friday = @first_monday+4.days
+      end  
+    elsif @chart == :month_to_date
+      @chart_type = :month_to_date
+    end
+
     
     users = User.account_managers
     if @chart_type == :weekly
@@ -60,7 +80,7 @@ class ReportController < ApplicationController
     end
     
     @sub_nav = []
-    CHART_TYPES.each do |type|
+    CHARTS.each do |type|
       @sub_nav << [type.to_s.titleize, {:controller => "report", :action => "index", :chart_type => type}]
     end
 
@@ -145,10 +165,16 @@ class ReportController < ApplicationController
             calls.each do |group, call_data|
               call_data = CdrEntries.by_ids(call_data.map{|c|c.id})
               unless call_data.empty? or call_data.first.user.nil?
-                if type == :duration
-                  x.value(call_data.for_extension(call_data.first.user.extension).after(date).before(date+7.days).sum(:billsec) / 60, :xid => group, :description => "minutes of calls on #{date}")
+                if @chart_type == :monthly
+                  call_for_user = call_data.for_extension(call_data.first.user.extension).after(date).before(date+7.days)
                 else
-                  x.value(call_data.for_extension(call_data.first.user.extension).after(date).before(date+7.days).count, :xid => group, :description => "calls on #{date} on #{group}")
+                  call_for_user = call_data.for_extension(call_data.first.user.extension).on(date)
+                end
+                
+                if type == :duration
+                  x.value(call_for_user.sum(:billsec) / 60, :xid => group, :description => "minutes of calls on #{date}")
+                else
+                  x.value(call_for_user.count, :xid => group, :description => "calls on #{date} on #{group}")
                 end
               end
             end
