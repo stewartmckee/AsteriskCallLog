@@ -1,6 +1,13 @@
 
--#%h2 Daily Calls
--#= render :partial => "reports", :locals => {:data => @daily_data, :id => "daily"}
-
-= render :partial => "reports", :locals => {:data => @weekly_data, :id => "weekly"}
-= render :partial => "reports", :locals => {:data => @monthly_data, :id => "monthly"}
+- if @chart_type == :daily
+  %h2 Daily Report
+  = render :partial => "reports", :locals => {:data => @daily_data, :id => "daily"}
+- elsif @chart_type == :weekly
+  %h2 Weekly Report
+  = render :partial => "reports", :locals => {:data => @weekly_data, :id => "weekly"}
+- elsif @chart_type == :monthly
+  %h2 Monthly Report
+  = render :partial => "reports", :locals => {:data => @monthly_data, :id => "monthly"}
+- elsif @chart_type == :month_to_date
+  %h2 Month To Date Report
+  = render :partial => "reports", :locals => {:data => @month_to_date_data, :id => "monthly"}
