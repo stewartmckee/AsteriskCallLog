@@ -11,7 +11,7 @@
       #main-nav
         = link_to "Home", home_url
         = link_to "My Calls", calls_url(:extension => current_user.extension) unless current_user.nil?
-        = link_to "My Reports", report_url(:chart_type => :weekly) unless current_user.nil?
+        = link_to "My Reports", report_url(:chart_type => :this_week) unless current_user.nil?
         = link_to "Logout", logout_url unless current_user.nil?
       - unless @sub_nav.nil?
         #sub-nav
